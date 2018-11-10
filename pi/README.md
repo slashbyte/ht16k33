@@ -11,7 +11,9 @@ To get things up and running on the Pi, you will need a few things.
 
 To enable i2c on the Pi
 
-[More I2c info]: (https://diyprojects.io/activate-i2c-bus-raspberry-pi-3-zero/)
+More I2c info
+
+https://diyprojects.io/activate-i2c-bus-raspberry-pi-3-zero/
 ```
 sudo raspi-config
 ```
@@ -24,7 +26,9 @@ sudo reboot
 
 To install the wiringPi library
 
-[WiringPi library info]: (http://wiringpi.com/download-and-install/)
+WiringPi library info
+
+http://wiringpi.com/download-and-install/
 ```
 sudo apt-get update
 sudo apt-get install wiringpi
