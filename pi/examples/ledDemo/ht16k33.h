@@ -85,7 +85,6 @@ public:
     uint8_t i2c_read(uint8_t addr);
     uint8_t i2c_read(uint8_t addr,uint8_t *data,uint8_t size);
 
-    void testing(void);
     uint8_t alphaPrint(uint8_t chars, char value); //write char to buffer and display (14 seg font)
     uint8_t alphaSet(uint8_t chars, char value); //write char to memory
     uint8_t alphaPrintStr(std::string value); //writes string to the buffer and then displays it

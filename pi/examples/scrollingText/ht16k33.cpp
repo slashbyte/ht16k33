@@ -342,14 +342,10 @@ void HT16K33::readKeyRaw(HT16K33::KEYDATA keydata,bool Fresh)
 
     // get the current state
     if (Fresh)
-    {
         _updateKeyram();
-    }
 
     for (i=0; i<3; i++)
-    {
         keydata[i]=_keyram[i];
-    }
 
     return;
 } // readKeyRaw
@@ -387,13 +383,9 @@ int8_t HT16K33::readKey(bool clear)
     for (i=0; i<3; i++)
     {
         if (clear)
-        {
             oldKeyData[i]=0;
-        }
         else
-        {
             oldKeyData[i]=_keyram[i];
-        }
     }
 
     _updateKeyram();
@@ -493,7 +485,7 @@ uint8_t HT16K33::alphaSet(uint8_t chars, char value)
 uint8_t HT16K33::alphaPrintStr(std::string value)
 {
     uint8_t i = alphaSetStr(value);
-    sendLed();
+    i |= sendLed();
     return i;
 }
 /****************************************************************/
