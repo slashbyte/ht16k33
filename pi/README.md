@@ -34,3 +34,4 @@ If everything is setup, run "make" in the demo directory
 make
 ./demo
 ```
+![GitHub Logo](/pi/pic/demo.jpg)
