@@ -20,7 +20,7 @@ Works on the PI!!!!!!
 */
 
 /*
-This is a simple
+This is a key test, I'm not sure if it works or not, I can't test it
 */
 
 #include "ht16k33.h"
@@ -40,8 +40,25 @@ int main()
     // Define the class
     HT16K33 HT;
     HT.begin(fd, 4); //using 4 char display
-    printf("Slash/Byte\n");
-	HT.alphaPrintStr("PI"); //display PI
+	printf("Slash/Byte\n");
+	printf("Well go-ahead! push some buttons!\n");
+	printf("[Ctrl]+C to exit the loop of doom\n");
+    HT.alphaPrintStr("Keys"); //display something stupid
 
+    int8_t key;
+    uint8_t lastKey = HT.readKey();
+
+    while(1) //run loop
+    {
+        key = HT.readKey();
+        if(key != 0)
+        {
+            if(key != lastKey)
+            {
+                printf("Key pressed: %d\n", key);
+                lastKey = key;
+            }
+        }
+    }
     return 0;
 }
