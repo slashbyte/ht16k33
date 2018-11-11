@@ -3,7 +3,7 @@
  * Copyright:  Peter Sjoberg <peters-alib AT techwiz.ca>
  * License: GPLv3
     This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License version 3 as 
+    it under the terms of the GNU General Public License version 3 as
     published by the Free Software Foundation.
 
     This program is distributed in the hope that it will be useful,
@@ -13,7 +13,7 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *	
+ *
  * 	.▄▄ · ▄▄▌   ▄▄▄· .▄▄ ·  ▄ .▄▄▄▄▄·  ▄· ▄▌▄▄▄▄▄▄▄▄ .
  *  ▐█ ▀. ██•  ▐█ ▀█ ▐█ ▀. ██▪▐█▐█ ▀█▪▐█▪██▌•██  ▀▄.▀·
  *  ▄▀▀▀█▄██▪  ▄█▀▀█ ▄▀▀▀█▄██▀▐█▐█▀▀█▄▐█▌▐█▪ ▐█.▪▐▀▀▪▄
@@ -22,10 +22,10 @@
  *											11-11-2018
  * Special function extension for use with
  * "Adafruit 0.54" Quad Alphanumeric FeatherWing Display - Red"
- * 
+ *
  * font found at https://github.com/adafruit/Adafruit_LED_Backpack/blob/master/Adafruit_LEDBackpack.cpp
  * lines 53-184, thanks adafruit!
- * 
+ *
  */
 
 #ifndef starburstfont_h

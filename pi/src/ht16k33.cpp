@@ -3,7 +3,7 @@
  * Copyright:  Peter Sjoberg <peters-alib AT techwiz.ca>
  * License: GPLv3
     This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License version 3 as 
+    it under the terms of the GNU General Public License version 3 as
     published by the Free Software Foundation.
 
     This program is distributed in the hope that it will be useful,
@@ -93,311 +93,311 @@
 // Constructor
 HT16K33::HT16K33()
 {
-	//COMMENTS!!!!
+    //COMMENTS!!!!
 }
 
 //init
 int HT16K33::begin(int address)
 {
-	_address = address;
-	// For older raspberry pi modules use 
-	// "/dev/i2c-0" instead of 
-	// "/dev/i2c-1" for the i2c port
-	char *filename = (char*)"/dev/i2c-1";
-	
-	if ((file_i2c = open(filename, O_RDWR)) < 0)
-	{
-		//ERROR HANDLING: you can check errno to see what went wrong
-        printf("Failed to open the i2c bus");
-		return 1;
-	}
-	
-	if (ioctl(file_i2c, I2C_SLAVE, _address) < 0)
+    _address = address;
+    // For older raspberry pi modules use
+    // "/dev/i2c-0" instead of
+    // "/dev/i2c-1" for the i2c port
+    char *filename = (char*)"/dev/i2c-1";
+
+    if ((file_i2c = open(filename, O_RDWR)) < 0)
     {
-		//ERROR HANDLING; you can check errno to see what went wrong
+        //ERROR HANDLING: you can check errno to see what went wrong
+        printf("Failed to open the i2c bus");
+        return 1;
+    }
+
+    if (ioctl(file_i2c, I2C_SLAVE, _address) < 0)
+    {
+        //ERROR HANDLING; you can check errno to see what went wrong
         printf("Failed to acquire bus access and/or talk to slave.\n");
         return 1;
     }
-	
-	int i = 0;
-	i|= i2c_write(HT16K33_SS  | HT16K33_SS_NORMAL); // Awaken the best
+
+    int i = 0;
+    i|= i2c_write(HT16K33_SS  | HT16K33_SS_NORMAL); // Awaken the best
     i|= i2c_write(HT16K33_DSP | HT16K33_DSP_ON | HT16K33_DSP_NOBLINK); // Display on and no blinking
     i|= i2c_write(HT16K33_RIS | HT16K33_RIS_OUT); // INT pin works as row output
     i|= i2c_write(HT16K33_DIM | HT16K33_DIM_16);  // Brightness set to max
-	
-	return i; //return i2c write state
+
+    return i; //return i2c write state
 }
 
 //write 8-bit byte
 int HT16K33::i2c_write(uint8_t data)
 {
-	uint8_t a[1] = {data};
-	if((write(file_i2c, a, 1))!=1)
-	{
-		printf("Failed to write to the i2c bus.\n");
-		return 1;
-	}
-	return 0;
+    uint8_t a[1] = {data};
+    if((write(file_i2c, a, 1))!=1)
+    {
+        printf("Failed to write to the i2c bus.\n");
+        return 1;
+    }
+    return 0;
 }
 
 //write 16 bits, 8-bit address & 8-bit of data
 int HT16K33::i2c_write(uint8_t addrMem, uint8_t data)
 {
-	uint8_t a[2] = {0};
-	a[0] = addrMem;
-	a[1] = data;
-	if((write(file_i2c, a, 2))!=2)
-	{
-		printf("Failed to write to the i2c bus.\n");
-		return 1;
-	}
-	return 0;
+    uint8_t a[2] = {0};
+    a[0] = addrMem;
+    a[1] = data;
+    if((write(file_i2c, a, 2))!=2)
+    {
+        printf("Failed to write to the i2c bus.\n");
+        return 1;
+    }
+    return 0;
 }
 
 //write 24 bits, 8-bit address & 16-bit of data
 int HT16K33::i2c_write_16(uint8_t addrMem, uint16_t data)
 {
-	uint8_t a[3] = {0};
-	a[0] = addrMem;
-	a[1] = GET_LOW_8_BITS(data);
-	a[2] = GET_HIGH_8_BITS(data); //don't forget to bring a towel 
-	if((write(file_i2c, a, 3))!=3)
-	{
-		printf("Failed to write to the i2c bus.\n");
-		return 1;
-	}
-	return 0;
+    uint8_t a[3] = {0};
+    a[0] = addrMem;
+    a[1] = GET_LOW_8_BITS(data);
+    a[2] = GET_HIGH_8_BITS(data); //don't forget to bring a towel
+    if((write(file_i2c, a, 3))!=3)
+    {
+        printf("Failed to write to the i2c bus.\n");
+        return 1;
+    }
+    return 0;
 }
 
 //write nth bits, 8-bit address & page write?
 int HT16K33::i2c_write_16(uint8_t addrMem, uint16_t *data, int size)
 {
-	int _size = (2*size)+1;
-	uint8_t a[_size] = {0};
-	a[0] = addrMem;
-	int j = 0;
-	for(int i = 1; i < _size; i++)
-	{
-		a[i] = GET_LOW_8_BITS(data[j]);
-		a[++i] = GET_HIGH_8_BITS(data[j]);
-		j++;
-	}
-	
-	if((write(file_i2c, a, _size))!=_size)
-	{
-		printf("Failed to write to the i2c bus.\n");
-		return 1;
-	}
-	return 0;
+    int _size = (2*size)+1;
+    uint8_t a[_size] = {0};
+    a[0] = addrMem;
+    int j = 0;
+    for(int i = 1; i < _size; i++)
+    {
+        a[i] = GET_LOW_8_BITS(data[j]);
+        a[++i] = GET_HIGH_8_BITS(data[j]);
+        j++;
+    }
+
+    if((write(file_i2c, a, _size))!=_size)
+    {
+        printf("Failed to write to the i2c bus.\n");
+        return 1;
+    }
+    return 0;
 }
 
 //reads 8bits @address
 int HT16K33::i2c_read(uint8_t addrMem, uint8_t &data)
 {
-	uint8_t a[1] = {0};
-	if(i2c_write(addrMem))
-		return 1;
-	int i = read(file_i2c, a, 1);
+    uint8_t a[1] = {0};
+    if(i2c_write(addrMem))
+        return 1;
+    int i = read(file_i2c, a, 1);
     if (i != 1)
     {
         //ERROR HANDLING: i2c transaction failed
         printf("Failed to read from the i2c bus.\n");
-		return i;
+        return i;
     }
     data = a[0];
-	return 0;
+    return 0;
 }
 
 //page read of 16bits @address
 int HT16K33::i2c_read(uint8_t addrMem, uint16_t *data, int size)
 {
-	int _size = size*2;
-	uint8_t a[_size] = {0};
-	if(i2c_write(addrMem))
-		return 1;
-	int i = read(file_i2c, a, _size);
-	if (i != _size)
+    int _size = size*2;
+    uint8_t a[_size] = {0};
+    if(i2c_write(addrMem))
+        return 1;
+    int i = read(file_i2c, a, _size);
+    if (i != _size)
     {
         //ERROR HANDLING: i2c transaction failed
         printf("Failed to read from the i2c bus.\n");
-		return i;
+        return i;
     }
-	
-	int j = 0;
-	for(int i = 0; i < size; i++)
-	{
-		data[i] = (a[j+1] << 8) | a[j];
-		j+=2;
-	}
-	return 0;
+
+    int j = 0;
+    for(int i = 0; i < size; i++)
+    {
+        data[i] = (a[j+1] << 8) | a[j];
+        j+=2;
+    }
+    return 0;
 }
 
 //reads and dumps the chip memory
 int HT16K33::memDump(void)
 {
-	uint16_t a[8] = {0};
-	int j = i2c_read(HT16K33_DDAP, a, 8);
-	if(j!=0)
-	{
-		printf("Dump error %d\n", j);
-		return 1;
-	}
-	printf("---| MEMDUMP |---\n");
-	for(int i = 0; i < 8; i++)
-		printf("0x%02X ..... 0x%04X\n", i*2, a[i]);
-	return 0;
+    uint16_t a[8] = {0};
+    int j = i2c_read(HT16K33_DDAP, a, 8);
+    if(j!=0)
+    {
+        printf("Dump error %d\n", j);
+        return 1;
+    }
+    printf("---| MEMDUMP |---\n");
+    for(int i = 0; i < 8; i++)
+        printf("0x%02X ..... 0x%04X\n", i*2, a[i]);
+    return 0;
 }
 
 //reads and dumps the key press "ram"
 int HT16K33::keyDump(void)
 {
-	uint16_t a[3] = {0};
-	int j = i2c_read(0x40, a, 3);
-	if(j!=0)
-	{
-		printf("Dump error %d\n", j);
-		return 1;
-	}
-	printf("---| KEYDUMP |---\n");
-	for(int i = 0; i < 3; i++)
-		printf("0x%02X ..... 0x%04X\n", (i*2)+0x40, a[i]);
-	return 0;
+    uint16_t a[3] = {0};
+    int j = i2c_read(0x40, a, 3);
+    if(j!=0)
+    {
+        printf("Dump error %d\n", j);
+        return 1;
+    }
+    printf("---| KEYDUMP |---\n");
+    for(int i = 0; i < 3; i++)
+        printf("0x%02X ..... 0x%04X\n", (i*2)+0x40, a[i]);
+    return 0;
 }
 
 //clr buffer
 void HT16K33::clrAllM(void)
 {
-	for(int i = 0; i < 8; i++)
-		memory[i] = 0x0000;	
+    for(int i = 0; i < 8; i++)
+        memory[i] = 0x0000;
 }
 
 //sets the chip mem to all zeros
 int HT16K33::clrAll(void)
 {
-	clrAllM();
-	return i2c_write_16(HT16K33_DDAP, memory, 8);
+    clrAllM();
+    return i2c_write_16(HT16K33_DDAP, memory, 8);
 }
 
 //set buffer
 void HT16K33::setAllM(void)
 {
-	for(int i = 0; i < 8; i++)
-		memory[i] = 0xFFFF;	
+    for(int i = 0; i < 8; i++)
+        memory[i] = 0xFFFF;
 }
 
 //sets the chip mem to all ones
 int HT16K33::setAll(void)
 {
-	setAllM();
-	return i2c_write_16(HT16K33_DDAP, memory, 8);
+    setAllM();
+    return i2c_write_16(HT16K33_DDAP, memory, 8);
 }
 
 //puts in standby mode
 int HT16K33::sleep(void)
 {
-	return i2c_write(HT16K33_SS|HT16K33_SS_STANDBY);
+    return i2c_write(HT16K33_SS|HT16K33_SS_STANDBY);
 }
 
 //wake and start oscillator
 int HT16K33::normal(void)
 {
-	return i2c_write(HT16K33_SS|HT16K33_SS_NORMAL);
+    return i2c_write(HT16K33_SS|HT16K33_SS_NORMAL);
 }
 
 //turns display on
 int HT16K33::displayOn(void)
 {
-	return i2c_write(HT16K33_DSP |HT16K33_DSP_ON);
+    return i2c_write(HT16K33_DSP |HT16K33_DSP_ON);
 }
 
 //turns display off
 int HT16K33::displayOff(void)
 {
-	return i2c_write(HT16K33_DSP |HT16K33_DSP_OFF);
+    return i2c_write(HT16K33_DSP |HT16K33_DSP_OFF);
 }
 
 //sets the brightness of the display
 int HT16K33::setBrightness(int val)
 {
-	if (HT16K33_DIM_1>=0 && val <HT16K33_DIM_16)
-		return i2c_write(HT16K33_DIM|val);
-	return 1;
+    if (HT16K33_DIM_1>=0 && val <HT16K33_DIM_16)
+        return i2c_write(HT16K33_DIM|val);
+    return 1;
 }
 
 //reads the interrupt flag
 uint8_t HT16K33::readINTflag(void)
 {
-	uint8_t a = 0;
-	int i = i2c_read(HT16K33_IFAP, a);
-	if(i!=0)
-		return 1;
-	return a;
+    uint8_t a = 0;
+    int i = i2c_read(HT16K33_IFAP, a);
+    if(i!=0)
+        return 1;
+    return a;
 }
 
 //sets the blink rate
 //0-3, off -> fast!
 int HT16K33::setBlinkRate(int rate)
 {
-	int _rate = 0;
-	if((rate >= 0) && (rate <= 3))
-	{
-		if(rate == 1)
-			_rate = HT16K33_DSP_BLINK05HZ;
-		else if(rate == 2)
-			_rate = HT16K33_DSP_BLINK1HZ;
-		else if(rate == 3)
-			_rate = HT16K33_DSP_BLINK2HZ;
-		else
-			_rate = HT16K33_DSP_NOBLINK;
-		return i2c_write(HT16K33_DSP | _rate | HT16K33_DSP_ON);
-	}
-	return 1;
+    int _rate = 0;
+    if((rate >= 0) && (rate <= 3))
+    {
+        if(rate == 1)
+            _rate = HT16K33_DSP_BLINK05HZ;
+        else if(rate == 2)
+            _rate = HT16K33_DSP_BLINK1HZ;
+        else if(rate == 3)
+            _rate = HT16K33_DSP_BLINK2HZ;
+        else
+            _rate = HT16K33_DSP_NOBLINK;
+        return i2c_write(HT16K33_DSP | _rate | HT16K33_DSP_ON);
+    }
+    return 1;
 }
 
 //set led in mem
 int HT16K33::setLedM(int index)
 {
-	if((index >= 0) && (index < 128))
-	{
-		int _i = index/16;
-		int _b = index%16;
-		SETBIT(memory[_i],_b);
-		return 0;
-	}
-	return 1;
+    if((index >= 0) && (index < 128))
+    {
+        int _i = index/16;
+        int _b = index%16;
+        SETBIT(memory[_i],_b);
+        return 0;
+    }
+    return 1;
 }
 
 //set in mem then show
 int HT16K33::setLed(int index)
 {
-	if(setLedM(index))
-		return 1;
-	return update();
+    if(setLedM(index))
+        return 1;
+    return update();
 }
 
 //sends all to display
 int HT16K33::update(void)
 {
-	return i2c_write_16(HT16K33_DDAP, memory, 8); //page write
+    return i2c_write_16(HT16K33_DDAP, memory, 8); //page write
 }
 
 //clr led in mem
 int HT16K33::clrLedM(int index)
 {
-	if((index >= 0) && (index < 128))
-	{
-		int _i = index/16;
-		int _b = index%16;
-		CLRBIT(memory[_i],_b);
-		return 0;
-	}
-	return 1;
+    if((index >= 0) && (index < 128))
+    {
+        int _i = index/16;
+        int _b = index%16;
+        CLRBIT(memory[_i],_b);
+        return 0;
+    }
+    return 1;
 }
-	
+
 //clr in mem then show
 int HT16K33::clrLed(int index)
 {
-	if(clrLedM(index))
-		return 1;
-	return update();
+    if(clrLedM(index))
+        return 1;
+    return update();
 }
