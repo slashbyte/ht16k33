@@ -1,9 +1,9 @@
 /*
-  font.h - used to talk to the htk1633 chip to do things like turn on LEDs or scan keys
+ * starburstfont.h - used to talk to the htk1633 chip to do things like turn on LEDs or scan keys
  * Copyright:  Peter Sjoberg <peters-alib AT techwiz.ca>
  * License: GPLv3
     This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License version 3 as
+    it under the terms of the GNU General Public License version 3 as 
     published by the Free Software Foundation.
 
     This program is distributed in the hope that it will be useful,
@@ -13,24 +13,24 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-Description: Pi adaptation of the arduino ht16k33 library
-Author: Slash/Byte
-Date: 11-9-2018
-Notes: for use with the 4 character alphanumeric displays
-*Requires wiringPi library!
-
-.▄▄ · ▄▄▌   ▄▄▄· .▄▄ ·  ▄ .▄▄▄▄▄·  ▄· ▄▌▄▄▄▄▄▄▄▄ .
-▐█ ▀. ██•  ▐█ ▀█ ▐█ ▀. ██▪▐█▐█ ▀█▪▐█▪██▌•██  ▀▄.▀·
-▄▀▀▀█▄██▪  ▄█▀▀█ ▄▀▀▀█▄██▀▐█▐█▀▀█▄▐█▌▐█▪ ▐█.▪▐▀▀▪▄
-▐█▄▪▐█▐█▌▐▌▐█ ▪▐▌▐█▄▪▐███▌▐▀██▄▪▐█ ▐█▀·. ▐█▌·▐█▄▄▌
- ▀▀▀▀ .▀▀▀  ▀  ▀  ▀▀▀▀ ▀▀▀ ··▀▀▀▀   ▀ •  ▀▀▀  ▀▀▀
+ *	
+ * 	.▄▄ · ▄▄▌   ▄▄▄· .▄▄ ·  ▄ .▄▄▄▄▄·  ▄· ▄▌▄▄▄▄▄▄▄▄ .
+ *  ▐█ ▀. ██•  ▐█ ▀█ ▐█ ▀. ██▪▐█▐█ ▀█▪▐█▪██▌•██  ▀▄.▀·
+ *  ▄▀▀▀█▄██▪  ▄█▀▀█ ▄▀▀▀█▄██▀▐█▐█▀▀█▄▐█▌▐█▪ ▐█.▪▐▀▀▪▄
+ *  ▐█▄▪▐█▐█▌▐▌▐█ ▪▐▌▐█▄▪▐███▌▐▀██▄▪▐█ ▐█▀·. ▐█▌·▐█▄▄▌
+ *   ▀▀▀▀ .▀▀▀  ▀  ▀  ▀▀▀▀ ▀▀▀ ··▀▀▀▀   ▀ •  ▀▀▀  ▀▀▀
+ *											11-11-2018
+ * Special function extension for use with
+ * "Adafruit 0.54" Quad Alphanumeric FeatherWing Display - Red"
+ * 
+ * font found at https://github.com/adafruit/Adafruit_LED_Backpack/blob/master/Adafruit_LEDBackpack.cpp
+ * lines 53-184, thanks adafruit!
+ * 
  */
 
-#ifndef font_h
-#define font_h
-//font found at https://github.com/adafruit/Adafruit_LED_Backpack/blob/master/Adafruit_LEDBackpack.cpp
-//lines 53-184, thanks adafruit!
+#ifndef starburstfont_h
+#define starburstfont_h
+
 extern const uint16_t alphafonttable[] =
 {
     0b0000000000000001,

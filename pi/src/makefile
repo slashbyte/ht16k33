@@ -1,11 +1,11 @@
-#makefile for scrolling text demo
-#Author: Slash/byte
+#makefile for DemoOfDoom
+#Author: Slash/Byte
 CC=g++
 CFLAGS=-c -Wall
-LDFLAGS= -lwiringPi
-SOURCES=main.cpp ht16k33.cpp
+LDFLAGS=
+SOURCES=main.cpp ht16k33.cpp starburst.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
-EXECUTABLE=scrollingText
+EXECUTABLE=demo_of_doom
 
 all: $(SOURCES) $(EXECUTABLE)
     
@@ -16,4 +16,4 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:
-	rm *o scrollingText
+	rm *o demo_of_doom

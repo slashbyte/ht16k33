@@ -1,8 +1,6 @@
 # HT16K33 for the PI
 
-This library is used to allow an arduino like platform (now with PI!) to communicate with the holtek ht16k33 chip
-to do things like turn on/off LEDs or scan keys
-
+Development library for use with the Holtek HT16K33
 
 ## Getting Started
 
@@ -21,19 +19,23 @@ Select option 5 and enable i2c
 sudo reboot
 ```
 
-### Installing wiringPi
+### Installing Other Stuff
 
-To install the wiringPi library
-
-[WiringPi library info](http://wiringpi.com/download-and-install/)
+[Even More I2c info](https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c)
 ```
 sudo apt-get update
-sudo apt-get install wiringpi
+sudo apt-get install -y i2c-tools
+```
+
+Ensure i2c is working, check with...
+```
+sudo i2cdetect -y 0
+sudo i2cdetect -y 1
 ```
 
 ## Running the Demo
 
-If everything is setup, run "make" in the demo directory
+If everything is setup, run "make" in the src directory
 
 ```
 make
