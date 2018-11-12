@@ -1,6 +1,6 @@
 /*
  * starburst.cpp - used to talk to the htk1633 chip to do things like turn on LEDs or scan keys
- * Copyright:  Peter Sjoberg <peters-alib AT techwiz.ca>
+ * Copyright:  Slash/Byte
  * License: GPLv3
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 3 as

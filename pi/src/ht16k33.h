@@ -1,6 +1,6 @@
 /*
  * ht16k33.h - used to talk to the htk1633 chip to do things like turn on LEDs or scan keys
- * Copyright:  Peter Sjoberg <peters-alib AT techwiz.ca>
+ * Copyright:  Slash/Byte
  * License: GPLv3
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 3 as
@@ -24,10 +24,10 @@
  *             Contribution of 7-segment & 16-segment display support
  *             Added clearAll() function
  *
- * 2018-11-11	Slash/byte
- *				Ported the code to the raspberry pi
- *				Broke the key scanning feature lol
- *				he also plans on fixing it later
+ * 2018-11-11  Slash/byte <I don't remember my email AT this time>
+ *             Ported the code to the raspberry pi
+ *             Broke the key scanning feature lol
+ *             he also plans on fixing it later
  *
  * 	.▄▄ · ▄▄▌   ▄▄▄· .▄▄ ·  ▄ .▄▄▄▄▄·  ▄· ▄▌▄▄▄▄▄▄▄▄ .
  *  ▐█ ▀. ██•  ▐█ ▀█ ▐█ ▀. ██▪▐█▐█ ▀█▪▐█▪██▌•██  ▀▄.▀·
