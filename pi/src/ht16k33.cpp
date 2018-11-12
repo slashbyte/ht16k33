@@ -104,14 +104,13 @@ int HT16K33::begin(int address)
     // "/dev/i2c-0" instead of
     // "/dev/i2c-1" for the i2c port
     char *filename = (char*)"/dev/i2c-1";
-
     if ((file_i2c = open(filename, O_RDWR)) < 0)
     {
         //ERROR HANDLING: you can check errno to see what went wrong
         printf("Failed to open the i2c bus");
         return 1;
     }
-
+	
     if (ioctl(file_i2c, I2C_SLAVE, _address) < 0)
     {
         //ERROR HANDLING; you can check errno to see what went wrong
@@ -124,7 +123,6 @@ int HT16K33::begin(int address)
     i|= i2c_write(HT16K33_DSP | HT16K33_DSP_ON | HT16K33_DSP_NOBLINK); // Display on and no blinking
     i|= i2c_write(HT16K33_RIS | HT16K33_RIS_OUT); // INT pin works as row output
     i|= i2c_write(HT16K33_DIM | HT16K33_DIM_16);  // Brightness set to max
-
     return i; //return i2c write state
 }
 
