@@ -77,8 +77,25 @@ int main()
     HT.setBlinkRate(0); //0hz blink
     //dump test
     printf("Dump test.\n");
-    HT.print("-Fin");
     HT.keyDump();
     HT.memDump();
+	//random bits
+	printf("And now for something completely different.\n");
+	HT.clrAll();
+	//sudo random data stream from Linear-feedback shift register
+	uint16_t lfsr = 0xACE1u;
+	for(int i = 0; i < 125; i++) //lasts 15 seconds
+	{
+		unsigned lsb = lfsr & 1;
+		lfsr >>= 1;
+		if(lsb)
+			lfsr ^=0xB400u;
+		HT.shiftMR();
+		HT.HT16K33::memory[0] = lfsr & 0x3FFF;
+		HT.update();
+		HT.delay(120);
+	}
+	HT.memDump();
+
     return 0;
 }
