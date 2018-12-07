@@ -96,6 +96,15 @@ int main()
         HT.delay(120);
     }
     HT.memDump();
-
+	//button testing
+	printf("BUTTON TEST!, Go ahead, push my buttons...\n");
+	printf("Ctrl+C to exit the demo program\n");
+	int bp = 0;
+	while(1)
+	{
+		bp = HT.getKey();
+		if(bp != -1)
+			printf("key: %d\n", bp);
+	}
     return 0;
 }
