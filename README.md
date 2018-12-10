@@ -6,6 +6,6 @@ to do things like turn on/off LEDs or scan keys
 Added a Pi compatible adaptation
 
 - The display functions well
-- Button input has yet to be tested, I'm lacking hardware
+- Added Button support, not the best
 
 
